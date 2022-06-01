@@ -1,0 +1,64 @@
+\documentclass[12pt]{eccomas-2022-_abstract}
+
+%\usepackage{graphicx}
+%\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+
+\title{INTERPOLATED MODELS FOR NON-INTRUSIVE AFFINIZATION OF REDUCED BASIS METHODS}
+
+\author{Eivind Fonn$^{1,6}$, Harald van Brummelen$^{2}$, Jens L.~Eftang$^{3}$, Trond Kvamsdal$^{1,4}$ and Adil Rasheed$^{1,5}$}
+
+\address{$^{1}$ SINTEF Digital, Dept.~of Applied Mathematics and Cybernetics, Trondheim, Norway
+\and
+$^{2}$ TUE, Dept.~of Mechanical Engineering, Eindhoven, The Netherlands,
+\and
+$^{3}$ DNV, Oslo, Norway
+\and
+$^{4}$ NTNU, Dept.~of Mathematical Sciences, Trondheim, Norway
+\and
+$^{5}$ NTNU, Dept.~of Engineering Cybernetics, Trondheim, Norway
+\and
+$^{6}$ \texttt{eivind.fonn@sintef.no}}
+
+\begin{document}
+
+\noindent {\bf Keywords}: {\it Reduced Basis Methods, Matrix Interpolation, Geometry Parametrization}
+\vskip0.5cm
+
+Reduced Basis Methods (RBMs) promise fast solutions of parametrized problems
+arising from a wide variety of backgrounds. Such methods can be used to enable
+real-time response, control and efficient algorithms for inverse problems.
+
+Although the solution step of an RBM is fast, a great deal of care must be taken
+to ensure fast assembly. In particular, the problem must be fully or
+approximately affine in the parameter space. This is generally a process that
+involves expert knowledge not only of the specific problem and the parameters
+under consideration, but also of the full-order model (FOM) being used to
+construct the RBM.  This process is rarely generalizable and highly intrusive.
+See for example \cite{Fonn}.
+
+We present AROMA, a general framework for \emph{nearly} non-intrusive RBMs for
+building re-usable joint component models \cite{Eftang} for jacket structures. Such
+components require extensive variation in geometry. Problems like these are
+almost never affine, but by interpolating system matrices in the parameter
+space we are nevertheless able to achieve appreciable accuracy without
+impacting speed.
+
+To achieve rapid deployment in industry applications, a core aim has been
+mimimal intrusiveness. To this end, AROMA only requires knowledge from the FOM
+about the system matrix and load vector, as well as information about which
+degrees-of-freedom are fixed.
+
+\begin{thebibliography}{99}
+\bibitem{Eftang} J.~L.~Eftang, A.~T.~Patera,
+A port-reduced static condensation reduced basis element method for large component-synthesized structures: approximation and A Posteriori error estimation.
+\textit{Adv. Model. and Simul. in Eng. Sci. 1}
+Vol. \textbf{3}, 2014.
+\bibitem{Fonn} E.~Fonn, H.~van Brummelen, T.~Kvamsdal, A.~Rasheed,
+Fast divergence-conforming reduced basis methods for steady Navier–Stokes flow.
+\textit{Comput. methods Appl. Mech. Engrg.}
+Vol. \textbf{346}, pp.~486--512, 2019.
+\end{thebibliography}
+
+\end{document}
