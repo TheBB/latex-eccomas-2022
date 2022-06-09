@@ -23,7 +23,7 @@
 \newcommand{\hrefcol}[2]{\textcolor{cyan}{\href{#1}{#2}}}
 
 \title{Interpolated models for non-intrusive affinization of reduced basis methods}
-\author{\href{mailto:eivind.fonn@sintef.no}{Eivind Fonn}}
+\author{\href{mailto:eivind.fonn@sintef.no}{Eivind Fonn}, Harald van Brummelen, Jens Eftang, Trond Kvamsdal, Adil Rasheed}
 \date{June 9, 2022}
 
 \begin{document}
@@ -74,6 +74,25 @@
     \end{columns}
 \end{frame}
 
+\begin{frame}{Static condensation}
+    \begin{align*}
+        \begin{pmatrix}
+            \mathbf A_{BB} & \mathbf A_{BI} \\
+            \mathbf A_{IB} & \mathbf A_{II}
+        \end{pmatrix}
+        \begin{pmatrix}
+            \mathbf u_B \\ \mathbf u_I
+        \end{pmatrix}
+        &=
+        \begin{pmatrix}
+            \mathbf f_B \\ \mathbf f_I
+        \end{pmatrix} \\[5mm]
+        \mathbf A_{II} \mathbf u_I &= \mathbf f_I - \mathbf A_{IB} \mathbf u_B \\[2mm]
+        (\mathbf A_{BB} - \mathbf A_{BI} \mathbf A_{II}^{-1} \mathbf A_{IB}) \mathbf u_B
+            &= \mathbf f_B - \mathbf A_{BI} \mathbf A_{II}^{-1} \mathbf f_I
+    \end{align*}
+\end{frame}
+
 \begin{frame}{Port condensation}
     \begin{columns}
         \column{0.7\linewidth}
@@ -92,6 +111,30 @@
         \column{0.3\linewidth}
         \includegraphics[height=0.4\textheight,trim={0 0 0 0},clip]{images/kjoint.png}
     \end{columns}
+\end{frame}
+
+\begin{frame}{Port condensation}
+    Let
+    \begin{itemize}
+        \item \(\ell^{(i)}\) be the lifting function associated with port \(i\)
+        \item \(\left\{b_k^{(i)}\right\}_k\) be reduced basis functions associated with port \(i\)
+    \end{itemize}
+    Then the response due to excitation of port \(i\) is
+    \begin{align*}
+        \Psi^{(i)} &= \ell^{(i)} + \sum_k c_k b_k^{(i)} \\
+        a(\Psi^{(i)}, v) &= 0 \quad\forall v
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Port condensation}
+    And the contribution to the (Galerkin) superelement is
+    \begin{align*}
+        a(\Psi^{(i)}, \Psi^{(j)})
+        &= a\left(\Psi^{(i)}, \ell^{(j)} + \sum_l c_l b_l^{(j)} \right) \\
+        &\approx a\left(\Psi^{(i)}, \ell^{(j)}\right) \\
+        &= a\left(\ell^{(i)}, \ell^{(j)}\right) + \sum_k c_k a\left( b_k^{(i)}, \ell^{(j)} \right)
+    \end{align*}
+    where we can discard the expensive terms due to (approximate) Galerkin orthogonality.
 \end{frame}
 
 \begin{frame}{Example}
@@ -196,7 +239,6 @@
 \begin{frame}{Empirical Interpolation}
     \begin{columns}
         \column{0.7\linewidth}
-        \only<1>{The technique follows in brief Eftang and Patera (2013).}
         \begin{itemize}
             \item EIM requires the online stage to evaluate a function \(g(x,\mu)\) at certain points \(x\) in the physical domain, or a vector-valued function \(g_i(\mu)\) at certain entries \(i\).
             \item Here, \(g\) is the Finite Element variational form or similar for FVM
@@ -463,6 +505,19 @@
             \end{axis}
         \end{tikzpicture}
     \end{center}
+\end{frame}
+
+\begin{frame}{Wish list}
+    \begin{itemize}
+        \item Ability to both
+        \begin{itemize}
+            \item not plan sampling scheme in advance, \emph{and}
+            \item be able use and discard matrices on-the-fly
+        \end{itemize}
+        \item Discover suitable $\xi$ automatically
+        \item Maintain black-box treatment of FOM
+        \item Some more complicated case studies (meshing challenges)
+    \end{itemize}
 \end{frame}
 
 \backmatter
